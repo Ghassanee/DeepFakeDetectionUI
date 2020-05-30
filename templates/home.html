@@ -13,7 +13,7 @@
 <body>
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color" style="background-color: black;" >
   <a class="navbar-brand" href="#">
-    <img src="{{url_for('static', filename='logo.png')}}"  style="scale: 1.2;margin: 2px 20px;" height="30" class="d-inline-block align-top"
+    <img src="{{url_for('static', filename='logo.png')}}"  style="scale: 1.2 ;margin: 2px 20px;" height="30" class="d-inline-block align-top"
       alt="mdb logo"> Deepfake Detection
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
@@ -46,39 +46,56 @@
 </nav>
 </head>
 <body>
-
+<div class="container mt-2" style="margin-top: 2.5rem !important;margin-bottom: 10rem !important;" >
+  <div class="row text-center" style="margin: 0 auto;margin-left: 0px;" >
+    <div class="col-6 row" style="margin-left: 0px !important;margin-right: 0px !important;" >
+    <div class="col-md-11  item" onclick="clickBtn1()">
+      <div class="card item-card card-block">
+    <img class="imgC"  src="{{ url_for('static' , filename =  'videos/first/Test.jpeg' ) }}" alt="Photo of sunset">
+        <h5 style="margin: 20px;" class="card-title  mt-3 mb-3">Test</h5>
+        <p style="margin: 10px 30px;" class="card-text"> If you want to test if the video is <strong> REAL</strong> or<strong> FAKE</strong>.</p> 
+  </div>
+    </div>
+    <div class="col-md-1  item" ></div>
+    </div>
+    <div class="col-6 row" style="margin-left: 0px !important;margin-right: 0px !important;" >
+    <div class="col-md-1  item" ></div>
+    <div class="col-md-11  item" onclick="clickBtn2()">
+      <div class="card item-card card-block">
+    <img class="imgC" src="{{ url_for('static' , filename =  'videos/first/Train.jpeg' ) }}" alt="Photo of sunset">
+        <h5 style="margin: 20px;" class="card-title  mt-3 mb-3">Train a model</h5>
+        <p  style="margin: 10px 30px;" class="card-text">The model provided is fine. We suggest you train you own models based on your dataset.</p> 
+  </div>
+    </div>
+  </div>
+  </div>
+  
+</div>
+<!--
 <div class="row" style="margin: 70px 50px;" >
-<!--Card-->
 <div class="card col-md-4 alert-danger ">
 <h4 class="card-title text-center alert-danger " style="margin: 11px 0px;" >Fake</h4>
-<!--Card image-->
 <video class="img-fluid" playsinline autoplay muted loop>
 <source src="{{ url_for('static' , filename =  'videos/first/fake.mp4' ) }}" type="video/mp4">
 </video>
-<!--Card content-->
 <div class="card-body">
-<!--Title-->
 </div>
 </div>
-<!--/.Card-->
 
-  <div class="col-md-4 text-center "><button onclick="clickBtn1()" type="button" style="margin-top: 160px; width: 18rem" class="btn btn-outline-info btn-lg" >Get Started </button> </div>
-  <div class="col-md-4 text-center "><button onclick="clickBtn2()" type="button" style="margin-top: 160px; width: 18rem" class="btn btn-outline-info btn-lg" >Module </button> </div>
+  <div class="col-md-6 text-center "><button onclick="clickBtn1()" type="button" style="margin-top: 160px; width: 18rem" class="btn btn-outline-info btn-lg" >Get Started </button> </div>
+  <div class="col-md-6 text-center "><button onclick="clickBtn2()" type="button" style="margin-top: 160px; width: 18rem" class="btn btn-outline-info btn-lg" >Module </button> </div>
 
-<!--Card-->
 <div class="card col-md-4 alert-success ">
 <h4 class="card-title text-center  " style="margin: 25px 0px;" >Real</h4>
-<!--Card image-->
 <video class="img-fluid" playsinline autoplay muted loop>
 <source src="{{ url_for('static' , filename =  'videos/first/real.mp4' ) }}" type="video/mp4">
 </video>
-<!--Card content-->
 <div class="card-body">
-<!--Title-->
 </div>
 </div>
-<!--/.Card-->
+
 </div>
+-->
 <script>
   function clickBtn1() {
   window.location = "{{ url_for('home') }}";
@@ -87,6 +104,66 @@
   window.location = "{{ url_for('train') }}";
   }
 </script>
+<style>
+.imgC{
+  height: 270px;
+  width:100%;
+}
+
+.item{
+  padding-left:5px;
+  padding-right:5px;
+}
+.item-card{
+  transition:0.5s;
+  cursor:pointer;
+}
+.item-card-title{  
+  font-size:15px;
+  transition:1s;
+  cursor:pointer;
+}
+.item-card-title i{  
+  font-size:15px;
+  transition:1s;
+  cursor:pointer;
+  color:#ffa710
+}
+.card-title i:hover{
+  transform: scale(1.25) rotate(100deg); 
+  color:#18d4ca;
+  
+}
+.card:hover{
+  transform: scale(1.05);
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+}
+.card-text{
+  height:80px;  
+}
+
+.card::before, .card::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: scale3d(0, 0, 1);
+  transition: transform .3s ease-out 0s;
+  background: rgba(255, 255, 255, 0.1);
+  content: '';
+  pointer-events: none;
+}
+.card::before {
+  transform-origin: left top;
+}
+.card::after {
+  transform-origin: right bottom;
+}
+.card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
+  transform: scale3d(1, 1, 1);
+}
+  </style>
 </body>
 
 <!-- Footer -->
