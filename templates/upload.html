@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{url_for('static', filename='dropzone-5.7.0/dist/dropzone.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='dropzone-5.7.0/dist/dropzone.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+<body>
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color" style="background-color: black;" >
+  <a class="navbar-brand" href="#">
+    <img src="{{url_for('static', filename='logo.png')}}"  style="scale: 1.2;margin: 2px 20px;" height="30" class="d-inline-block align-top"
+      alt="mdb logo"> Deepfake Detection
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="https://github.com/HongguLiu/Deepfake-Detection">
+          <i class="fab fa-github"></i> GitHub Code
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://deepfakedetectionchallenge.ai/">
+          <i class="fab fa-korvue" ></i> DFD Challange </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fab fa-github-square"></i> Contributors </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+          <a class="dropdown-item" href="https://github.com/ghassane20a" style="padding-left: 0.5rem;" ><i class="fab fa-github" style="margin-right: 20px;" ></i>ghassane20a</a>
+          <a class="dropdown-item" href="https://github.com/DrackMB" style="padding-left: 0.5rem;" ><i class="fab fa-github" style="margin-right: 20px;" ></i>DrackMB</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="col-12" style="margin-top: 40px !important;width: 90%;margin: 0 auto;text-align: center;" >
+
+        <div class="card mdb-color">
+            <div class="card-body">
+                <h2 class="font-weight-bold cyan-lighter-hover mb-3">About Deepfake Detection</h2>
+                <p class="white-darker-hover" style="font-size: 18px;" >Deepfake detection will be a viable method for social media companies to reduce disinformation in 2020, which is important not only because of the presidential election, but also because awareness of realistic deepfakes will still be quite low.
+</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="font-weight-bold cyan-lighter-hover mb-3 text-center" style="display:none ; font-size: 30px;margin-top: 10px !important" id="waiting">
+    Please Wait : <label  id="minutes">00</label>:<label  id="seconds">00</label>
+   <div class="font-weight-light "style=" font-size: 15px"> Expected waiting time : 2 min/MB + upload time </div>
+   <div class="font-weight-light "style=" font-size: 15px"> Expected waiting time will go heigher if the quality is high  </div>
+  </div>
+ <div id="dropzone" >
+<form style="width: 65%;margin: 0 auto;margin-top: 40px;margin-bottom: 140px;height: 250px; border: 3px dashed black " class="dropzone dz-clickable" id="upload-file" action="{{ url_for('upload') }}" method="POST"  enctype="multipart/form-data">
+<div style="margin-top: 70px;font-size: 30px;" class="dz-message">Drop files here or click to upload.
+</div>
+</form>
+ </div>
+
+
+
+</body>
+
+<!-- Footer -->
+<footer style="margin-top: 4rem"  class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="#"> DFD.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+<script>
+  $("#upload-file").on('change drop', function (e) {
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+document.getElementById("waiting").style.display = "block" ; 
+setInterval(setTime, 1000);
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+});
+
+Dropzone.autoDiscover = false;
+  var myDropzone = new Dropzone("#upload-file");
+
+$(function() {
+  myDropzone.on("queuecomplete", function(file) {
+    
+    window.location = "{{ url_for('upload_complete') }}";
+  });
+});
+
+</script>
+</html>
