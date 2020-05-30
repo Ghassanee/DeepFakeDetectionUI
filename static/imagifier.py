@@ -13,7 +13,7 @@ class Imagifier :
               break
           if self.count%5 == 0 :
             cv2.imwrite(os.path.join(folder,"frame{:d}.jpg".format(self.count)), image) 
-            file1 = open("/content/gdrive/My Drive/saved/static/data_list/Deepfakes_c0_test.txt","a") 
+            file1 = open("/content/DeepFakeDetectionGUI/static/data_list/Deepfakes_c0_test.txt","a") 
             file1.write(f"{folder}/frame{self.count}.jpg "+ token +"\n") 
             file1.close()
           self.count += 1

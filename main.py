@@ -27,12 +27,8 @@ app.config.update(
 dropzone = Dropzone(app)
 @app.route("/")
 def root():
-  arr = []
-  for filename in os.listdir("/content/result"):  
-    arr.append(filename)
   session["pbar"] = 0 
-  return render_template("train_complete.html" , filenames = arr  )
-  #return render_template("home.html")
+  return render_template("home.html")
 @app.route("/home")
 def home():
   return render_template("upload.html")
@@ -62,7 +58,7 @@ def module():
       shutil.rmtree(folderF)
     shutil.rmtree(targetMR)
     shutil.rmtree(targetMF)
-    shutil.rmtree("/content/gdrive/My Drive/saved/static/output/fs_xception_c0_299")
+    shutil.rmtree("/content/DeepFakeDetectionGUI/static/output/fs_xception_c0_299")
     
   except:
    print('Error while deleting directory')
@@ -87,9 +83,9 @@ def module():
       
   os.mkdir(folderR)
   os.mkdir(folderF)
-  open("/content/gdrive/My Drive/saved/static/data_list/Deepfakes_c0_test.txt", 'w').close()
-  iR = Imagifier("/content/gdrive/My Drive/saved/static/moduleVideos/real" , "1", folderR)
-  iF = Imagifier("/content/gdrive/My Drive/saved/static/moduleVideos/fake" , "0", folderF)
+  open("/content/DeepFakeDetectionGUI/static/data_list/Deepfakes_c0_test.txt", 'w').close()
+  iR = Imagifier("/content/DeepFakeDetectionGUI/static/moduleVideos/real" , "1", folderR)
+  iF = Imagifier("/content/DeepFakeDetectionGUI/static/moduleVideos/fake" , "0", folderF)
 
   T = Train()
   return jsonify("1")
@@ -108,12 +104,12 @@ def module_complete():
 
 @app.route("/route" , methods=[ 'POST'])
 def upload():
-  if os.path.isfile("/content/gdrive/My Drive/saved/static/videos/output/003_000.mp4"):
-    os.remove("/content/gdrive/My Drive/saved/static/videos/output/003_000.mp4")
-  if os.path.isfile("/content/gdrive/My Drive/saved/static/videos/output/003_000.avi"):  
-    os.remove("/content/gdrive/My Drive/saved/static/videos/output/003_000.avi")
-  if os.path.isfile("/content/gdrive/My Drive/saved/static/videos/003_000.mp4"):  
-    os.remove("/content/gdrive/My Drive/saved/static/videos/003_000.mp4")
+  if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4"):
+    os.remove("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4")
+  if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/output/003_000.avi"):  
+    os.remove("/content/DeepFakeDetectionGUI/static/videos/output/003_000.avi")
+  if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4"):  
+    os.remove("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4")
   target = os.path.join(APP_ROOT , 'static/videos/')
   print (target)
 
@@ -126,21 +122,21 @@ def upload():
   destination  = "/".join([target , "003_000.mp4"])
   print(destination)
   file.save(destination)
-  d = detect("/content/gdrive/My Drive/saved/static/videos/003_000.mp4" , "/content/gdrive/My Drive/saved/static/pretrained_model/best2.pkl" , "/content/gdrive/My Drive/saved/static/videos/output")
+  d = detect("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4" , "/content/DeepFakeDetectionGUI/static/pretrained_model/best2.pkl" , "/content/DeepFakeDetectionGUI/static/videos/output")
   print(d.pbar)
   session["pbar"] = str(d.pbar)
   def convert_avi_to_mp4(avi_file_path, output_name):
     os.popen("ffmpeg -i '{input}' -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4 '{output}.mp4'".format(input = avi_file_path, output = output_name))
     return True
-  convert_avi_to_mp4("/content/gdrive/My Drive/saved/static/videos/output/003_000.avi", "/content/gdrive/My Drive/saved/static/videos/output/003_000")  
+  convert_avi_to_mp4("/content/DeepFakeDetectionGUI/static/videos/output/003_000.avi", "/content/DeepFakeDetectionGUI/static/videos/output/003_000")  
   time.sleep(20)
   return "OK"
 
 @app.route('/upload-complete' )      
 def upload_complete():
-  while not os.path.exists("/content/gdrive/My Drive/saved/static/videos/output/003_000.mp4"):
+  while not os.path.exists("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4"):
     time.sleep(1)
-  if os.path.isfile("/content/gdrive/My Drive/saved/static/videos/output/003_000.mp4"):
+  if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4"):
     return render_template("complete.html" , val = session['pbar'] ) ; 
 
 

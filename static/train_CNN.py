@@ -17,8 +17,8 @@ class Train:
   def train(self):
     name = 'fs_xception_c0_299'
     continue_train = False
-    train_list = '/content/gdrive/My Drive/saved/static/data_list/Deepfakes_c0_test.txt'
-    val_list = '/content/gdrive/My Drive/saved/static/data_list/Deepfakes_c0_test.txt'
+    train_list = '/content/DeepFakeDetectionGUI/static/data_list/Deepfakes_c0_test.txt'
+    val_list = '/content/DeepFakeDetectionGUI/static/data_list/Deepfakes_c0_test.txt'
     epoches = 20
     batch_size = 32
     model_name = 'fs_c0_299.pkl'
@@ -100,17 +100,4 @@ class Train:
   def __init__(self  ):
     self.train()
 
-  """
-  if __name__ == '__main__':
-    parse = argparse.ArgumentParser(
-      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parse.add_argument('--name', '-n', type=str, default='fs_xception_c0_299')
-    parse.add_argument('--train_list', '-tl' , type=str, default = './data_list/Deepfakes_c0_test.txt')
-    parse.add_argument('--val_list', '-vl' , type=str, default = './data_list/Deepfakes_c0_test.txt')
-    parse.add_argument('--batch_size', '-bz', type=int, default=32)
-    parse.add_argument('--epoches', '-e', type=int, default='20')
-    parse.add_argument('--model_name', '-mn', type=str, default='fs_c0_299.pkl')
-    parse.add_argument('--continue_train', type=bool, default=False)
-    parse.add_argument('--model_path', '-mp', type=str, default='./videos/1_df_c0_299.pkl')
-    main()
-  """  
+ 
