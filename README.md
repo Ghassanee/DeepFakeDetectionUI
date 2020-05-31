@@ -3,7 +3,7 @@
 ##Use google colab
 1. Go to https://colab.research.google.com
 2. make a **new notebook**
-3. make sure that you are suing a GUI **Runtime => change runtime type => GUI** 
+3. make sure that you are using a the right runtime : **Runtime => change runtime type => GPU** 
 4. Enjoy!
 ---
 ## clone 
