@@ -58,7 +58,7 @@ def module():
       shutil.rmtree(folderF)
     shutil.rmtree(targetMR)
     shutil.rmtree(targetMF)
-    shutil.rmtree("/content/DeepFakeDetectionGUI/static/output/fs_xception_c0_299")
+    shutil.rmtree("/content/DeepFakeDetectionGUI/static/result")
     
   except:
    print('Error while deleting directory')
@@ -94,13 +94,10 @@ def module():
 @app.route('/module-complete')      
 def module_complete():  
   arr = []
-  key = []
-  i=1
-  for filename in os.listdir("/content/result"):  
-    arr.append(filename)
-    key.append(i)
-    i = i + 1 
-  return render_template("train_complete.html" , filenames = arr , key = key )
+  for filename in os.listdir("/content/DeepFakeDetectionGUI/static/result"):  
+    if 'model' in filename:
+      arr.append(filename)
+  return render_template("train_complete.html" , filenames = arr  )
 
 @app.route("/route" , methods=[ 'POST'])
 def upload():

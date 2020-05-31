@@ -20,10 +20,10 @@ class Train:
     train_list = '/content/DeepFakeDetectionGUI/static/data_list/Deepfakes_c0_test.txt'
     val_list = '/content/DeepFakeDetectionGUI/static/data_list/Deepfakes_c0_test.txt'
     epoches = 20
-    batch_size = 32
-    model_name = 'fs_c0_299.pkl'
+    batch_size = 25
+    model_name = 'model.pkl'
     model_path = './videos/1_df_c0_299.pkl'
-    output_path = os.path.join('/content/result')
+    output_path = os.path.join('static/result')
     if not os.path.exists(output_path):
       os.mkdir(output_path)
     torch.backends.cudnn.benchmark=True
@@ -95,7 +95,7 @@ class Train:
       torch.save(model.module.state_dict(), os.path.join(output_path, str(epoch) + '_' + model_name))
     print('Best val Acc: {:.4f}'.format(best_acc))
     model.load_state_dict(best_model_wts)
-    torch.save(model.module.state_dict(), os.path.join(output_path, "best.pkl"))
+    torch.save(model.module.state_dict(), os.path.join(output_path, "bestmodel.pkl"))
 
   def __init__(self  ):
     self.train()
