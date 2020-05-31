@@ -1,5 +1,11 @@
 # DeepFakeDetectionGUI
 ---
+##Use google colab
+1. Go to https://colab.research.google.com
+2. make a **new notebook**
+3. make sure that you are suing a GUI **Runtime => change runtime type => GUI** 
+4. Enjoy!
+---
 ## clone 
 ```
 !git clone https://github.com/ghassane20a/DeepFakeDetectionGUI.git
@@ -17,7 +23,7 @@
 cd DeepFakeDetectionGUI/
 ```
 ---
-## starting the app 
+## start the app 
 ```
 !python main.py
 ```
