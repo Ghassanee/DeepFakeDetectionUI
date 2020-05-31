@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 <body>
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color" style="background-color: black;" >
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="/">
     <img src="{{url_for('static', filename='logo.png')}}"  style="scale: 1.2;margin: 2px 20px;" height="30" class="d-inline-block align-top"
       alt="mdb logo"> Deepfake Detection
   </a>
@@ -44,13 +44,18 @@
     </ul>
   </div>
 </nav>
-<div class="col-12" style="margin-top: 40px !important;width: 90%;margin: 0 auto;text-align: center;" >
+<div class="col-7 text-center" style="margin-top: 40px !important;width: 90%;margin: 0 auto;text-align: center;" >
 
-        <div class="card mdb-color">
+        <div class="card mdb-color text-left">
             <div class="card-body">
-                <h2 class="font-weight-bold cyan-lighter-hover mb-3">About Deepfake Detection</h2>
-                <p class="white-darker-hover" style="font-size: 18px;" >Deepfake detection will be a viable method for social media companies to reduce disinformation in 2020, which is important not only because of the presidential election, but also because awareness of realistic deepfakes will still be quite low.
-</p>
+                <h2 class="font-weight-bold cyan-lighter-hover mb-3">How to test</h2>
+                <p class="white-darker-hover" style="font-size: 18px;" >
+                1. Just drag&drop the video that you want to test.</p>
+                <p class="white-darker-hover" style="font-size: 18px;" >
+                2. The timer will start ,timer depend in the quality and the size of the file.</p> 
+                <p class="white-darker-hover" style="font-size: 18px;" >
+                3. When the process is done you will be redirected to a page where you can watch the result or download it.</p>
+                <p><strong> Happy Testing!</strong></p>
             </div>
         </div>
 
@@ -61,7 +66,7 @@
    <div class="font-weight-light "style=" font-size: 15px"> Expected waiting time will go heigher if the quality is high  </div>
   </div>
  <div id="dropzone" >
-<form style="width: 65%;margin: 0 auto;margin-top: 40px;margin-bottom: 140px;height: 250px; border: 3px dashed black " class="dropzone dz-clickable" id="upload-file" action="{{ url_for('upload') }}" method="POST"  enctype="multipart/form-data">
+<form style="width: 80%;margin: 0 auto;margin-top: 40px;margin-bottom: 140px;height: 250px; border: 3px dashed black " class="dropzone dz-clickable" id="upload-file" action="{{ url_for('upload') }}" method="POST"  enctype="multipart/form-data">
 <div style="margin-top: 70px;font-size: 30px;" class="dz-message">Drop files here or click to upload.
 </div>
 </form>

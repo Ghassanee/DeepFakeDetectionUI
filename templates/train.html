@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 <body>
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color" style="background-color: black;" >
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="/">
     <img src="{{url_for('static', filename='logo.png')}}"  style="scale: 1.2;margin: 2px 20px;" height="30" class="d-inline-block align-top"
       alt="mdb logo"> Deepfake Detection
   </a>
@@ -47,26 +47,78 @@
     </ul>
   </div>
 </nav>
-<div class="row">
-<div class="col-6 alert alert-info" role="alert">
-  Make sure that <strong> Real files names contain 'REAL' word</strong> 
+<div class=" container-fluid row">
+<div class="col-5" style="margin-top: 40px !important;margin: 0 auto;" >
+  <div class="card mdb-color" style="width: 36rem;" >
+     <div class="card-body" style="padding-bottom: 2.80rem;" >
+       <h2 class="font-weight-bold cyan-lighter-hover mb-3">How to train your model</h2>
+        <p class="white-darker-hover" style="font-size: 18px;" >
+        In order to train a model you'll need to have  2+ videos</p>
+        <p class="white-darker-hover" style="font-size: 18px;" >
+          one of them is a fake video and the other is a real one.</p> 
+        <p class="white-darker-hover" style="font-size: 18px;" >
+        Then our neural network will produce a model based in  
+        </p>
+        <p class="white-darker-hover" style="font-size: 18px;" >
+        your dataset (the 2 videos). 
+        </p>
+      </div>
+  </div>
 </div>
-<div class="col-6 alert alert-info" role="alert">
-  Rename Fake files FAKE... 
-  Make sure that <strong> Fake files names contain 'FAKE' word </strong> 
+<div class="col-1" ></div>
+<div class="col-6" style="margin-top: 40px !important;margin: 0 auto;" >
+  <div class="card mdb-color" style="width: 40rem;" >
+     <div class="card-body"  >
+           <h2 class="font-weight-bold cyan-lighter-hover mb-3">Before Submitting</h2>
+           <p class="white-darker-hover" style="font-size: 18px;" >
+            1. Make sure that <strong> Real files names contain 'REAL' word</strong> </p>
+           <p class="white-darker-hover" style="font-size: 18px;" >
+            2. Make sure that <strong> Fake files names contain 'FAKE' word </strong> </p>
+            <p class="white-darker-hover " style="font-size: 18px;" >
+            3. When upload is done click Start Training </p>
+           <p class=" alert alert-success  white-darker-hover" style="font-size: 18px;" >
+            <strong>Exemples:</strong> FAKE.mp4 , REAL.mp4 , FAKE1.mp4</p>
+             </p>
+      </div>
+  </div>
 </div>
+
 </div>
-<div class="alert alert-secondary" role="alert">
-<strong>Exemples:</strong> FAKE.mp4 , REAL.mp4 , FAKE1.mp4
+<div class="font-weight-bold cyan-lighter-hover mb-3 text-center" style="display:none ; font-size: 30px;margin-top: 10px !important" id="waiting">
+    Please Wait : <label  id="minutes">00</label>:<label  id="seconds">00</label>
+   <div class="font-weight-light "style=" font-size: 15px"> Expected waiting time : 2 min/MB + upload time </div>
+   <div class="font-weight-light "style=" font-size: 15px"> Expected waiting time will go heigher if the quality is high  </div>
 </div>
 {{ dropzone.create(action='uploada') }}
-   <div class="col-md-4 text-center ">
-    <input class="btn btn-outline-info btn-lg" style="margin:0 auto;" id="forwardBtn"  type = "button" value = "Click Here" />
+   <div class="text-center ">
+    <input class="btn btn-outline-info btn-lg" style="margin:0 auto;" id="forwardBtn"  type = "button" value = "Start Training" />
    </div>
 {{ dropzone.load_js() }}
 {{ dropzone.config() }}
 </body>
 <script>
+$("#forwardBtn").on('click', function (e) {
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+document.getElementById("waiting").style.display = "block" ; 
+setInterval(setTime, 1000);
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+});  
  $(function() {
     $('#forwardBtn').bind('click', function() {
      $.getJSON("{{ url_for('module') }}",
@@ -79,12 +131,12 @@
 </script>  
 <style>
 #myDropzone{
-  margin: 70px 70px;
   height: 230px;
   border: 3px black dashed;
+  margin: 25px 70px;
 }
 .dz-default.dz-message{
-  font-size: 20px;
+  font-size: 2rem;
   margin: 75px;
 }
 </style>
