@@ -1,6 +1,6 @@
 # DeepFakeDetectionGUI
 ---
-##Use google colab
+## Use google colab
 1. Go to https://colab.research.google.com
 2. make a **new notebook**
 3. make sure that you are using a the right runtime : **Runtime => change runtime type => GPU** 
