@@ -36,5 +36,6 @@ click in the **ngrok** link like : "http://bc8621095968.ngrok.io"
 if you got this problem 
 ```
 tunnel url = j['tunnels'][0]['public_url'] # Do the parsing of the get
+indexerror: list index out of range
 ```
 **you should make another notebook or restart your runtime**
