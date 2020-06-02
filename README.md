@@ -26,5 +26,15 @@ cd DeepFakeDetectionGUI/
 ## start the app 
 ```
 !python main.py
+
+
 ```
 click in the **ngrok** link like : "http://bc8621095968.ngrok.io"
+
+## Problem you may see
+
+if you got this problem 
+```
+tunnel url = j['tunnels'][0]['public_url'] # Do the parsing of the get
+```
+**you should make another notebook or restart your runtime**
