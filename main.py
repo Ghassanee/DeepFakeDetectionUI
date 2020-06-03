@@ -42,7 +42,16 @@ def uploada():
      for key, f in request.files.items():
         if key.startswith('file'):
           f.save(os.path.join("/content/sample_data", f.filename))
-  return render_template('home.html')
+  return "OK"
+
+
+@app.route('/b', methods=['POST', 'GET'])
+def uploadb():
+  if request.method == 'POST':
+     for key, f in request.files.items():
+        if key.startswith('file'):
+          f.save(os.path.join("/content/DeepFakeDetectionGUI/images/videosForTest", f.filename))
+  return "OK"
 
 @app.route("/route-module")
 def module():
@@ -91,15 +100,7 @@ def module():
   return jsonify("1")
 
 
-@app.route('/module-complete')      
-def module_complete():  
-  arr = []
-  for filename in os.listdir("/content/DeepFakeDetectionGUI/static/result"):  
-    if 'model' in filename:
-      arr.append(filename)
-  return render_template("train_complete.html" , filenames = arr  )
-
-@app.route("/route" , methods=[ 'POST'])
+@app.route("/route")
 def upload():
   if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4"):
     os.remove("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4")
@@ -107,19 +108,31 @@ def upload():
     os.remove("/content/DeepFakeDetectionGUI/static/videos/output/003_000.avi")
   if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4"):  
     os.remove("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4")
-  target = os.path.join(APP_ROOT , 'static/videos/')
+  target = os.path.join(APP_ROOT , 'static/videos')
   print (target)
-
-  if not os.path.isdir(target):
-    os.mkdir(target)
-    
-  for file in request.files.getlist("file"):
-    print(file)
-    
   destination  = "/".join([target , "003_000.mp4"])
   print(destination)
-  file.save(destination)
-  d = detect("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4" , "/content/DeepFakeDetectionGUI/static/pretrained_model/best2.pkl" , "/content/DeepFakeDetectionGUI/static/videos/output")
+  if not os.path.isdir(target):
+    os.mkdir(target)
+  trigger = 0
+  for file in os.listdir("/content/DeepFakeDetectionGUI/images/videosForTest"):  
+    print(file)
+    if "MODEL" in  file :
+      trigger = 1 
+      print ("me")
+      destinat  = "/".join(["/content/DeepFakeDetectionGUI/static/pretrained_model" , str("0")])
+      shutil.move("/content/DeepFakeDetectionGUI/images/videosForTest/"+file, destinat)
+    else : 
+      print ("not me")
+      shutil.move("/content/DeepFakeDetectionGUI/images/videosForTest/"+file, destination)
+
+  if trigger : 
+    print ("me1")
+    d = detect("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4" , "/content/DeepFakeDetectionGUI/static/pretrained_model/best0.pkl" , "/content/DeepFakeDetectionGUI/static/videos/output")
+  else: 
+    print ("not me1")
+    d = detect("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4" , "/content/DeepFakeDetectionGUI/static/pretrained_model/best.pkl" , "/content/DeepFakeDetectionGUI/static/videos/output")
+  
   print(d.pbar)
   session["pbar"] = str(d.pbar)
   def convert_avi_to_mp4(avi_file_path, output_name):
@@ -127,7 +140,7 @@ def upload():
     return True
   convert_avi_to_mp4("/content/DeepFakeDetectionGUI/static/videos/output/003_000.avi", "/content/DeepFakeDetectionGUI/static/videos/output/003_000")  
   time.sleep(20)
-  return "OK"
+  return jsonify("1")
 
 @app.route('/upload-complete' )      
 def upload_complete():
@@ -135,6 +148,15 @@ def upload_complete():
     time.sleep(1)
   if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4"):
     return render_template("complete.html" , val = session['pbar'] ) ; 
+
+
+@app.route('/module-complete')      
+def module_complete():  
+  arr = []
+  for filename in os.listdir("/content/DeepFakeDetectionGUI/static/result"):  
+    if 'model' in filename:
+      arr.append(filename)
+  return render_template("train_complete.html" , filenames = arr  )
 
 
 app.run()

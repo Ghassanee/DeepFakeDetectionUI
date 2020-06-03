@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Upload</title>
+<title>Test</title>
+{{ dropzone.load_css() }}
+{{ dropzone.style('border: 2px dashed #0087F7; margin: 10px 0 10px; min-height: 400px;') }}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -10,6 +12,7 @@
 <script type="text/javascript" src="{{url_for('static', filename='dropzone-5.7.0/dist/dropzone.js')}}"></script>
 <link rel="stylesheet" href="{{url_for('static', filename='dropzone-5.7.0/dist/dropzone.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 {% include 'header.html' %}
 <div class="col-7 text-center" style="margin-top: 40px !important;width: 90%;margin: 0 auto;text-align: center;" >
@@ -33,14 +36,19 @@
    <div class="font-weight-light "style=" font-size: 15px"> Expected waiting time : 2 min/MB + upload time </div>
    <div class="font-weight-light "style=" font-size: 15px"> Expected waiting time will go heigher if the quality is high  </div>
   </div>
- <div id="dropzone" >
+<!-- <div id="dropzone" >
 <form style="width: 80%;margin: 0 auto;margin-top: 40px;margin-bottom: 140px;height: 250px; border: 3px dashed black " class="dropzone dz-clickable" id="upload-file" action="{{ url_for('upload') }}" method="POST"  enctype="multipart/form-data">
 <div style="margin-top: 70px;font-size: 30px;" class="dz-message">Drop files here or click to upload.
 </div>
 </form>
  </div>
-
-
+-->
+{{ dropzone.create(action='uploadb') }}
+   <div class="text-center ">
+    <input class="btn btn-outline-info btn-lg" style="margin:0 auto;" id="forwardBtn"  type = "button" value = "Start Testing" />
+   </div>
+{{ dropzone.load_js() }}
+{{ dropzone.config() }}
 
 </body>
 
@@ -55,7 +63,51 @@
 
 </footer>
 <!-- Footer -->
+<script>
+$("#forwardBtn").on('click', function (e) {
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+document.getElementById("waiting").style.display = "block" ; 
+setInterval(setTime, 1000);
 
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+});  
+$(function() {
+    $('#forwardBtn').bind('click', function() {
+     $.getJSON("{{ url_for('upload') }}",
+        function(data) {
+    window.location = "{{ url_for('upload_complete') }}";
+            });
+            return false;
+          });
+        });
+</script>  
+<style>
+#myDropzone{
+  height: 230px;
+  border: 3px black dashed;
+  margin: 25px 70px;
+}
+.dz-default.dz-message{
+  font-size: 2rem;
+  margin: 75px;
+}
+</style>
+<!--
 <script>
   $("#upload-file").on('change drop', function (e) {
 var minutesLabel = document.getElementById("minutes");
@@ -91,4 +143,5 @@ $(function() {
 });
 
 </script>
+-->
 </html>
