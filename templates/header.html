@@ -1,25 +1,31 @@
 
 <!-- partial:index.partial.html -->
-<nav class="navbar">
+<nav style=" box-shadow: 0 3px 6px 0 rgba(50,50,50,.3); padding-bottom: 10px;padding-top: 10px;" class="navbar sticky-top">
   <div class="container">
 
-    <div class="navbar-header">
+    <div class="navbar-header ">
       <button class="navbar-toggler" data-toggle="open-navbar1">
         <span></span>
         <span></span>
         <span></span>
       </button>
-      <a href="{{url_for('static', filename='logo.png')}}">
+      <a href="/">
         <h4>DeepFake<span>Detection</span></h4>
       </a>
     </div>
 
     <div class="navbar-menu" id="open-navbar1">
       <ul class="navbar-nav">
-        <li class="active"><a href="{{url_for('static', filename='logo.png')}}">Home</a></li>
+        <li class="active"><a href="/">Home</a></li>
         <li class="navbar-dropdown">
-          <a href="#" class="dropdown-toggler" data-dropdown="my-dropdown-id">
-            Contributors <i class="fa fa-angle-down"></i>
+        <a class="nav-link" href="https://github.com/HongguLiu/Deepfake-Detection">
+          <i class="fab fa-github"></i> GitHub Code
+          <span class="sr-only">(current)</span>
+        </a>
+        </li>
+        <li class="navbar-dropdown">
+          <a   class="dropdown-toggler" data-dropdown="my-dropdown-id">
+            <i class="fab fa-github-square"></i> Contributors <i class="fa fa-angle-down"></i>
           </a>
           <ul class="dropdown" id="my-dropdown-id">
               <li><a class="dropdown-item" href="https://github.com/ghassane20a" style="padding-left: 0.5rem;" ><i class="fab fa-github" style="margin-right: 20px;" ></i>ghassane20a</a></li>
@@ -64,7 +70,7 @@
 body {
   font-family: "Roboto", sans-serif;
   font-size: 0.925rem;
-  background-color : #F4F1E9 ; 
+  background-color : #f3f0ec ; 
 }
 
 a {
