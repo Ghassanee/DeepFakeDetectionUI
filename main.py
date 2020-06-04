@@ -49,6 +49,8 @@ def uploada():
 
 @app.route('/b', methods=['POST', 'GET'])
 def uploadb():
+  if not os.path.isdir("/content/DeepFakeDetectionGUI/images/videosForTest"):
+    os.mkdir("/content/DeepFakeDetectionGUI/images/videosForTest")
   if request.method == 'POST':
      for key, f in request.files.items():
         if key.startswith('file'):
