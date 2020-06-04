@@ -15,6 +15,8 @@ from static.dataset.transform import xception_default_data_transforms
 
 class detect:
   pbar = 0  
+  labels = [0,0]
+
   def __init__(self , video_path, model_path, output_path): 
      self.pbar = self.test_full_image_network(video_path, model_path, output_path )
 
@@ -112,7 +114,6 @@ class detect:
       assert start_frame < num_frames - 1
       end_frame = end_frame if end_frame else num_frames
       pbar = tqdm(total=end_frame-start_frame)
-
       while reader.isOpened():
           _, image = reader.read()
           if image is None:
@@ -160,6 +161,10 @@ class detect:
               cv2.putText(image, str(output_list)+'=>'+label, (x, y+h+30),
                           font_face, font_scale,
                           color, thickness, 2)
+              if 'real' in label:
+                self.labels[0] = self.labels[0]+1
+              else:
+                self.labels[1] = self.labels[1]+1
               # draw box over face
               cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
 
@@ -173,7 +178,6 @@ class detect:
       pbar.close()
       if writer is not None:
           writer.release()
-          
           print('Finished! Output saved under {}'.format(output_path))
       else:
           print('Input video file was empty')

@@ -23,13 +23,13 @@
   <source src="{{ url_for('static' , filename =  'videos/output/003_000.mp4' ) }}" type="video/mp4" />
 </video>
 <br>
-<div class="alert alert-success text-center" role="alert" style="margin: 20px 100px;font-size: 20px; >
+<div class="alert alert-{{ val2 }} text-center" role="alert" style="margin: 20px 100px;font-size: 20px; >
   <h4  style="font-size: 40px;" class="alert-heading">Well done!</h4>
-  <p>The Detection is done </p>
-  <p class="font-weight-bold" >for clarification the model that we are using is not complete, the result may not be accurate </p>
+  <p style="font-size: 3rem;" > <strong> Video is {{val3}} </strong> </p>
+  <p class="font-weight-bold" >For clarification the model that we are using is not complete, the result may not be accurate </p>
   <p class="text-center">Information about the processing :  </p>
   <hr>
-  <p class="mb-0 font-weight-bold text-center ">  {{val}} </p>
+  <p class="mb-0 font-weight-bold text-center ">  {{val1}} </p>
 </div>
 
 </body>

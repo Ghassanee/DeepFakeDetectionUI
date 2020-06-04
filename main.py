@@ -28,6 +28,8 @@ dropzone = Dropzone(app)
 @app.route("/")
 def root():
   session["pbar"] = 0 
+  session["fakeOrReal"] = 0 
+
   return render_template("home.html")
 @app.route("/home")
 def home():
@@ -119,22 +121,30 @@ def upload():
     print(file)
     if "MODEL" in  file :
       trigger = 1 
-      print ("me")
       destinat  = "/".join(["/content/DeepFakeDetectionGUI/static/pretrained_model" , str("0")])
       shutil.move("/content/DeepFakeDetectionGUI/images/videosForTest/"+file, destinat)
     else : 
-      print ("not me")
       shutil.move("/content/DeepFakeDetectionGUI/images/videosForTest/"+file, destination)
 
   if trigger : 
-    print ("me1")
     d = detect("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4" , "/content/DeepFakeDetectionGUI/static/pretrained_model/best0.pkl" , "/content/DeepFakeDetectionGUI/static/videos/output")
   else: 
-    print ("not me1")
-    d = detect("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4" , "/content/DeepFakeDetectionGUI/static/pretrained_model/best.pkl" , "/content/DeepFakeDetectionGUI/static/videos/output")
-  
+    d = detect("/content/DeepFakeDetectionGUI/static/videos/003_000.mp4" , "/content/DeepFakeDetectionGUI/static/pretrained_model/df_c0_best.pkl" , "/content/DeepFakeDetectionGUI/static/videos/output")
   print(d.pbar)
+  print(d.labels)
+  if os.path.isdir("/content/DeepFakeDetectionGUI/images/videosForTest"):     
+      shutil.rmtree("/content/DeepFakeDetectionGUI/images/videosForTest") 
+  os.mkdir("/content/DeepFakeDetectionGUI/images/videosForTest")
+  
+  session["result"] = 0
   session["pbar"] = str(d.pbar)
+  if d.labels[0] > d.labels[1] * 3 :
+    session["result"] = "REAL"
+    session["fakeOrReal"] = "success" 
+  else : 
+    session["result"] = "FAKE"
+    session["fakeOrReal"] = "danger" 
+  
   def convert_avi_to_mp4(avi_file_path, output_name):
     os.popen("ffmpeg -i '{input}' -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4 '{output}.mp4'".format(input = avi_file_path, output = output_name))
     return True
@@ -147,7 +157,7 @@ def upload_complete():
   while not os.path.exists("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4"):
     time.sleep(1)
   if os.path.isfile("/content/DeepFakeDetectionGUI/static/videos/output/003_000.mp4"):
-    return render_template("complete.html" , val = session['pbar'] ) ; 
+    return render_template("complete.html" , val1 = session['pbar'] , val2= session["fakeOrReal"] , val3 = session["result"] ) ; 
 
 
 @app.route('/module-complete')      
