@@ -8,7 +8,7 @@
 ---
 ## clone 
 ```
-!git clone https://github.com/ghassane20a/DeepFakeDetectionGUI.git
+!git clone https://github.com/Ghassanee/DeepFakeDetectionGUI.git
 ```
 ---------
 ## install requirements
