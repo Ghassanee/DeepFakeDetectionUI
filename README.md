@@ -1,4 +1,4 @@
-# DeepFakeDetectionGUI
+# DeepFakeDetectionUI
 ---
 ## Use google colab
 1. Go to https://colab.research.google.com
